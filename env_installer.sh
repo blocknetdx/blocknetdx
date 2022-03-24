@@ -113,8 +113,16 @@ function installgit() {
 # Clone repo                                               #
 ############################################################
 function clonerepo() {
-	#git clone https://github.com/blocknetdx/exrproxy-env.git ${HOME}/exrproxy-env
-	git clone -b dev-autobuilder-pom https://github.com/blocknetdx/exrproxy-env.git ${HOME}/exrproxy-env
+	location="${HOME}/exrproxy-env"
+	if [ -d "$location" ]; then
+		printf "%s\n\033[93;1m $location found. Updating...\n\033[0m"
+		git -C $location stash
+		git -C $location pull
+	else
+		printf "%s\n\033[93;1m $location no found. Cloning...\n\033[0m"
+		#git clone https://github.com/blocknetdx/exrproxy-env.git ${HOME}/exrproxy-env
+		git clone -b dev-autobuilder-pom https://github.com/blocknetdx/exrproxy-env.git $location
+	fi
 }
 
 ############################################################
@@ -171,6 +179,7 @@ while [ : ]; do
 		printf "%s\n\033[92;1mInstalling docker & docker-compose\n\033[0m"
 		installdocker
 		installdockercompose
+		dockergroup
 		# Installing python3 and python3-pip
 		printf "%s\n\033[92;1mInstalling python3 and python3-pip\n\033[0m"
 		installpython

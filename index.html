@@ -27,8 +27,8 @@ fi
 # Install OS dependencies                                  #
 ############################################################
 function installosdependencies() {
-	sudo apt update -y
-	sudo apt install -y libz-dev libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext cmake gcc grep
+	sudo $PKM update -y
+	sudo $PKM install -y libz-dev libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext cmake gcc grep
 }
 
 ############################################################
@@ -37,8 +37,8 @@ function installosdependencies() {
 function uninstalldocker() {
 	sudo systemctl stop docker.service
   sudo systemctl stop docker.socket
-  sudo apt purge -y docker-engine docker docker.io docker-ce docker-ce-cli docker-ce-rootless-extras docker-scan-plugin docker-compose
-  sudo apt autoremove -y --purge -y docker-engine docker docker.io docker-ce docker-ce-cli docker-ce-rootless-extras docker-scan-plugin docker-compose
+  sudo $PKM purge -y docker-engine docker docker.io docker-ce docker-ce-cli docker-ce-rootless-extras docker-scan-plugin docker-compose
+  sudo $PKM autoremove -y --purge -y docker-engine docker docker.io docker-ce docker-ce-cli docker-ce-rootless-extras docker-scan-plugin docker-compose
   sudo rm -rf /var/lib/docker /etc/docker
   sudo rm /etc/apparmor.d/docker
   sudo rm -rf /var/run/docker.sock
@@ -52,8 +52,8 @@ function uninstalldocker() {
 ############################################################
 function installdocker() {
 	# Install requirements
-	sudo apt update -y
-	sudo apt install -y \
+	sudo $PKM update -y
+	sudo $PKM install -y \
 		apt-transport-https \
 		ca-certificates \
 		curl \
@@ -63,14 +63,14 @@ function installdocker() {
 
 	# Add Docker’s official GPG key
 	curl curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-	sudo apt-key fingerprint 0EBFCD88
+	sudo $PKM-key fingerprint 0EBFCD88
 	# Set up the stable repository
 	sudo printf \
 		"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
 		$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 	# Install Docker Engine
-	sudo apt -y update
-	sudo apt -y install docker-ce docker-ce-cli containerd.io
+	sudo $PKM -y update
+	sudo $PKM -y install docker-ce docker-ce-cli containerd.io
 }
 
 ############################################################
@@ -99,8 +99,8 @@ function dockergroup() {
 # Install python                                           #
 ############################################################
 function installpython() {
-	sudo apt update -y
-	sudo apt install -y python3 python3-pip
+	sudo $PKM update -y
+	sudo $PKM install -y python3 python3-pip
 }
 
 ############################################################
@@ -114,8 +114,8 @@ function installpythonrequirements() {
 # Install git                                              #
 ############################################################
 function installgit() {
-	sudo apt update -y
-	sudo apt install -y git
+	sudo $PKM update -y
+	sudo $PKM install -y git
 }
 
 ############################################################

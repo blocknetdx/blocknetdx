@@ -26,6 +26,21 @@ function installosdependencies() {
 # Uninstall Docker                                         #
 ############################################################
 function uninstalldocker() {
+	DOCKER=$(which docker)
+	if grep -q "/" <<< "$DOCKER"; then
+		printf "%s\033[93;1mDocker found\033[0m"
+		printf "%s\n\033[93;1mThis script will stop all running docker containers\033[0m"
+		printf "%s\n\033[93;1mthen remove the currently installed version of docker.\033[0m"
+		printf "%s\n\033[93;1mDo you wish to continue (Y/n)?\033[0m"
+		echo ""
+		read -p "" -n 1 -r
+		if [[ $REPLY =~ ^[Yy]$ ]]; then
+			for i in $(docker ps -q); do docker stop $i; done
+		else
+			printf "%s\n\033[91;1mStopping this script\n\033[0m"
+			exit 1;
+		fi
+	fi
 	sudo systemctl stop docker.service
   sudo systemctl stop docker.socket
   sudo $PKM purge -y docker-engine docker docker.io docker-ce docker-ce-cli docker-ce-rootless-extras docker-scan-plugin docker-compose

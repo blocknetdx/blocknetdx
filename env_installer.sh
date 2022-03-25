@@ -44,8 +44,9 @@ function uninstalldocker() {
 	fi
 	sudo systemctl stop docker.service
   sudo systemctl stop docker.socket
-  sudo $PKM purge -y docker-engine docker docker.io docker-ce docker-ce-cli docker-ce-rootless-extras docker-scan-plugin docker-compose
-  sudo $PKM autoremove -y --purge -y docker-engine docker docker.io docker-ce docker-ce-cli docker-ce-rootless-extras docker-scan-plugin docker-compose
+  sudo systemctl stop containerd
+  sudo $PKM purge -y containerd.io docker-engine docker docker.io docker-ce docker-ce-cli docker-ce-rootless-extras docker-scan-plugin docker-compose
+  sudo $PKM autoremove -y --purge -y containerd.io docker-engine docker docker.io docker-ce docker-ce-cli docker-ce-rootless-extras docker-scan-plugin docker-compose
   sudo rm -rf /var/lib/docker /etc/docker
   sudo rm /etc/apparmor.d/docker
   sudo rm -rf /var/run/docker.sock
@@ -60,6 +61,7 @@ function uninstalldocker() {
 function installdocker() {
 	# Install requirements
 	sudo $PKM update -y
+	sudo $PKM upgrade -y
 	sudo $PKM install -y \
 		apt-transport-https \
 		ca-certificates \
@@ -76,8 +78,8 @@ function installdocker() {
 		"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
 		$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 	# Install Docker Engine
-	sudo $PKM -y update
-	sudo $PKM -y install docker-ce docker-ce-cli containerd.io
+	sudo $PKM update -y
+	sudo $PKM install -y docker-ce docker-ce-cli containerd.io
 }
 
 ############################################################

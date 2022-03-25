@@ -194,7 +194,6 @@ while [ : ]; do
 		printf "%s\n\033[92;1mInstalling docker & docker-compose\n\033[0m"
 		installdocker
 		installdockercompose
-		dockergroup
 		# Installing python3 and python3-pip
 		printf "%s\n\033[92;1mInstalling python3 and python3-pip\n\033[0m"
 		installpython
@@ -204,6 +203,9 @@ while [ : ]; do
 		# Install python requirements
 		printf "%s\n\033[92;1mInstalling python3 requirements\n\033[0m"
 		installpythonrequirements
+		# Docker user group
+		printf "%s\n\033[92;1mCreating user group docker\n\033[0m"
+		dockergroup
 		# Removing this script
 		printf "%s\n\033[91;1mRemoving this script\n\033[0m"
 		sudo rm -- "$0"

@@ -39,11 +39,13 @@ function uninstalldocker() {
 				printf "%s\033[93;1mStopping container $i\033[0m"
 				docker stop $i; 
 			done
+			docker system prune -f && docker volume prune -f && docker network prune -f
+		else
 			printf "%s\n\033[91;1mStopping this script\n\033[0m"
 			exit 1;
 		fi
 	fi
-	sudo systemctl stop docker.service
+  sudo systemctl stop docker.service
   sudo systemctl stop docker.socket
   sudo systemctl stop containerd
   sudo $PKM purge -y containerd.io docker-engine docker docker.io docker-ce docker-ce-cli docker-ce-rootless-extras docker-scan-plugin docker-compose

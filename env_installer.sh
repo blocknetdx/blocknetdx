@@ -212,13 +212,13 @@ while [ : ]; do
 		# Removing this script
 		printf "%s\n\033[91;1mRemoving this script\n\033[0m"
 		sudo rm -- "$0"
-		printf "%s\n\033[92;1mLogging off in 3 seconds...\n\033[0m"
+		printf "%s\n\033[92;1mRebooting off in 3 seconds...\n\033[0m"
 		sleep 1
-		printf "%s\n\033[92;1mLogging off in 2 seconds...\n\033[0m"
+		printf "%s\n\033[92;1mRebooting off in 2 seconds...\n\033[0m"
 		sleep 1
-		printf "%s\n\033[92;1mLogging off in 1 seconds...\n\033[0m"
+		printf "%s\n\033[92;1mRebooting off in 1 seconds...\n\033[0m"
 		sleep 1
-		kill -9 $PPID
+		sudo reboot -f
 		printf '%s\n\033[0m'
 		shift
 		;;

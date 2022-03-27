@@ -39,11 +39,13 @@ function uninstalldocker() {
 				printf "%s\033[93;1mStopping container $i\033[0m"
 				docker stop $i; 
 			done
+			docker system prune -f && docker volume prune -f && docker network prune -f
+		else
 			printf "%s\n\033[91;1mStopping this script\n\033[0m"
 			exit 1;
 		fi
 	fi
-	sudo systemctl stop docker.service
+  sudo systemctl stop docker.service
   sudo systemctl stop docker.socket
   sudo systemctl stop containerd
   sudo $PKM purge -y containerd.io docker-engine docker docker.io docker-ce docker-ce-cli docker-ce-rootless-extras docker-scan-plugin docker-compose
@@ -210,13 +212,13 @@ while [ : ]; do
 		# Removing this script
 		printf "%s\n\033[91;1mRemoving this script\n\033[0m"
 		sudo rm -- "$0"
-		printf "%s\n\033[92;1mLogging off in 3 seconds...\n\033[0m"
+		printf "%s\n\033[92;1mRebooting off in 3 seconds...\n\033[0m"
 		sleep 1
-		printf "%s\n\033[92;1mLogging off in 2 seconds...\n\033[0m"
+		printf "%s\n\033[92;1mRebooting off in 2 seconds...\n\033[0m"
 		sleep 1
-		printf "%s\n\033[92;1mLogging off in 1 seconds...\n\033[0m"
+		printf "%s\n\033[92;1mRebooting off in 1 seconds...\n\033[0m"
 		sleep 1
-		kill -9 $PPID
+		sudo reboot -f
 		printf '%s\n\033[0m'
 		shift
 		;;

@@ -140,8 +140,8 @@ function clonerepo() {
 		git -C $location pull
 	else
 		printf "%s\n\033[93;1m $location no found. Cloning...\n\033[0m"
-		#git clone https://github.com/blocknetdx/exrproxy-env.git ${HOME}/exrproxy-env
-		git clone -b dev-autobuilder-pom https://github.com/blocknetdx/exrproxy-env.git $location
+		git clone https://github.com/blocknetdx/exrproxy-env.git $location
+		# git clone -b dev-autobuilder-pom https://github.com/blocknetdx/exrproxy-env.git $location
 	fi
 }
 

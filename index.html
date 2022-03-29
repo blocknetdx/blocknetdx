@@ -39,6 +39,7 @@ function checkdocker() {
 		fi
 	else
 		printf "%s\n\033[91;1mDocker not found\033[0m\n"
+		printf "%s\n\033[92;1mInstalling Docker\033[0m\n"
 		installdocker
 	fi
 }
@@ -59,6 +60,7 @@ function checkdockercompose() {
 		fi
 	else
 		printf "%s\n\033[91;1mDocker Compose not found\033[0m\n"
+		printf "%s\n\033[92;1mInstalling Docker Compose\033[0m\n"
 		installdockercompose
 	fi
 }

@@ -35,7 +35,7 @@ function checkdocker() {
 		if [ "$(printf '%s\n' "$dockerversion" "$DOCKER_VERSION" | sort --version-sort | head -n1)" = "$dockerversion" ]; then 
 			printf "%s\n\033[92;1mGreater than or equal to ${dockerversion}\033[0m"
 		else
-			printf "%s\n\033[91;1mLess than ${dockerversion}. You have to upgrade\033[0m"
+			printf "%s\n\033[91;1mLess than ${dockerversion}. You have to upgrade\033[0m\n"
 		fi
 	else
 		printf "%s\n\033[91;1mDocker not found\033[0m"
@@ -55,7 +55,7 @@ function checkdockercompose() {
 		if [ "$(printf '%s\n' "$composeversion" "$COMPOSE_VERSION" | sort --version-sort | head -n1)" = "$composeversion" ]; then 
 			printf "%s\n\033[92;1mGreater than or equal to ${composeversion}\033[0m"
 		else
-			printf "%s\n\033[91;1mLess than ${composeversion}. You have to upgrade\033[0m"
+			printf "%s\n\033[91;1mLess than ${composeversion}. You have to upgrade\033[0m\n"
 		fi
 	else
 		printf "%s\n\033[91;1mDocker Compose not found\033[0m"

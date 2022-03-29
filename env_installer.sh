@@ -19,7 +19,48 @@ fi
 ############################################################
 function installosdependencies() {
 	sudo $PKM update -y
-	sudo $PKM install -y libz-dev libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext cmake gcc grep
+	sudo $PKM install -y libz-dev libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext cmake gcc grep awk
+}
+
+############################################################
+# Check Docker Engine                                      #
+############################################################
+function checkdocker() {
+	dockerversion="20.10.13"
+	DOCKER=$(which docker)
+	if grep -q "/" <<< "$DOCKER"; then
+		printf "%s\n\033[93;1mDocker found\033[0m"
+		DOCKER_VERSION=$(docker --version | awk '{print $3}')
+		DOCKER_VERSION={{$DOCKER_VERSION::-1}}
+		if [ "$(printf '%s\n' "$dockerversion" "$DOCKER_VERSION" | sort --version-sort | head -n1)" = "$requiredver" ]; then 
+			printf "%s\n\033[93;1mGreater than or equal to ${dockerversion}\033[0m"
+		else
+			printf "%s\n\033[91;1mLess than ${dockerversion}. You have to upgrade\033[0m"
+		fi
+	else
+		printf "%s\n\033[91;1mDocker not found\033[0m"
+		installdocker
+	fi
+}
+
+############################################################
+# Check Docker Compose                                     #
+############################################################
+function checkdockercompose() {
+	composeversion="2.3.3"
+	COMPOSE=$(which docker-compose)
+	if grep -q "/" <<< "$COMPOSE"; then
+		printf "%s\n\033[93;1mDocker Compose found\033[0m"
+		COMPOSE_VERSION=$(docker-compose --version | awk -F'v' '{print $3}')
+		if [ "$(printf '%s\n' "$dockerversion" "$DOCKER_VERSION" | sort --version-sort | head -n1)" = "$requiredver" ]; then 
+			printf "%s\n\033[93;1mGreater than or equal to ${composeversion}\033[0m"
+		else
+			printf "%s\n\033[91;1mLess than ${composeversion}. You have to upgrade\033[0m"
+		fi
+	else
+		printf "%s\n\033[91;1mDocker Compose not found\033[0m"
+		installdockercompose
+	fi
 }
 
 ############################################################
@@ -197,8 +238,8 @@ while [ : ]; do
 		installgit
 		# Install docker & docker compose
 		printf "%s\n\033[92;1mInstalling docker & docker-compose\n\033[0m"
-		installdocker
-		installdockercompose
+		checkdocker
+		checkdockercompose
 		dockergroup
 		# Installing python3 and python3-pip
 		printf "%s\n\033[92;1mInstalling python3 and python3-pip\n\033[0m"

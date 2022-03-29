@@ -25,38 +25,38 @@ function installosdependencies() {
 ############################################################
 # Uninstall Docker                                         #
 ############################################################
-function uninstalldocker() {
-	DOCKER=$(which docker)
-	if grep -q "/" <<< "$DOCKER"; then
-		printf "%s\033[93;1mDocker found\033[0m"
-		printf "%s\n\033[93;1mThis script will stop all running docker containers\033[0m"
-		printf "%s\n\033[93;1mthen remove the currently installed version of docker.\033[0m"
-		printf "%s\n\033[93;1mDo you wish to continue? Press \033[92;1my \033[93;1mor \033[92;1mn\033[0m"
-		echo ""
-		read -p "" -n 1 -r
-		if [[ $REPLY =~ ^[Yy]$ ]]; then
-			for i in $(docker ps -q); do 
-				printf "%s\033[93;1mStopping container $i\033[0m"
-				docker stop $i; 
-			done
-			docker system prune -f && docker volume prune -f && docker network prune -f
-		else
-			printf "%s\n\033[91;1mStopping this script\n\033[0m"
-			exit 1;
-		fi
-	fi
-  sudo systemctl stop docker.service
-  sudo systemctl stop docker.socket
-  sudo systemctl stop containerd
-  sudo $PKM purge -y containerd.io docker-engine docker docker.io docker-ce docker-ce-cli docker-ce-rootless-extras docker-scan-plugin docker-compose
-  sudo $PKM autoremove -y --purge -y containerd.io docker-engine docker docker.io docker-ce docker-ce-cli docker-ce-rootless-extras docker-scan-plugin docker-compose
-  sudo rm -rf /var/lib/docker /etc/docker
-  sudo rm /etc/apparmor.d/docker
-  sudo rm -rf /var/run/docker.sock
-  sudo rm /usr/bin/docker-compose
-  sudo rm /usr/local/bin/docker-compose
-  sudo rm /usr/share/keyrings/docker-archive-keyring.gpg
-}
+# function uninstalldocker() {
+# 	DOCKER=$(which docker)
+# 	if grep -q "/" <<< "$DOCKER"; then
+# 		printf "%s\033[93;1mDocker found\033[0m"
+# 		printf "%s\n\033[93;1mThis script will stop all running docker containers\033[0m"
+# 		printf "%s\n\033[93;1mthen remove the currently installed version of docker.\033[0m"
+# 		printf "%s\n\033[93;1mDo you wish to continue? Press \033[92;1my \033[93;1mor \033[92;1mn\033[0m"
+# 		echo ""
+# 		read -p "" -n 1 -r
+# 		if [[ $REPLY =~ ^[Yy]$ ]]; then
+# 			for i in $(docker ps -q); do 
+# 				printf "%s\033[93;1mStopping container $i\033[0m"
+# 				docker stop $i; 
+# 			done
+# 			docker system prune -f && docker volume prune -f && docker network prune -f
+# 		else
+# 			printf "%s\n\033[91;1mStopping this script\n\033[0m"
+# 			exit 1;
+# 		fi
+# 	fi
+#   sudo systemctl stop docker.service
+#   sudo systemctl stop docker.socket
+#   sudo systemctl stop containerd
+#   sudo $PKM purge -y containerd.io docker-engine docker docker.io docker-ce docker-ce-cli docker-ce-rootless-extras docker-scan-plugin docker-compose
+#   sudo $PKM autoremove -y --purge -y containerd.io docker-engine docker docker.io docker-ce docker-ce-cli docker-ce-rootless-extras docker-scan-plugin docker-compose
+#   sudo rm -rf /var/lib/docker /etc/docker
+#   sudo rm /etc/apparmor.d/docker
+#   sudo rm -rf /var/run/docker.sock
+#   sudo rm /usr/bin/docker-compose
+#   sudo rm /usr/local/bin/docker-compose
+#   sudo rm /usr/share/keyrings/docker-archive-keyring.gpg
+# }
 
 ############################################################
 # Install Docker                                           #
@@ -187,8 +187,8 @@ while [ : ]; do
 		;;
 	-i | --install)
 		# Uninstalling docker & docker compose
-		printf "%s\n\033[92;1mUninstalling docker & docker-compose\n\033[0m"
-		uninstalldocker
+		# printf "%s\n\033[92;1mUninstalling docker & docker-compose\n\033[0m"
+		# uninstalldocker
 		# Installing OS dependencies
 		printf "%s\n\033[92;1mInstalling OS dependencies\n\033[0m"
 		installosdependencies

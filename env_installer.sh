@@ -19,7 +19,7 @@ fi
 ############################################################
 function installosdependencies() {
 	sudo $PKM update -y
-	sudo $PKM install -y libz-dev libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext cmake gcc grep awk
+	sudo $PKM install -y libz-dev libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext cmake gcc grep gawk
 }
 
 ############################################################

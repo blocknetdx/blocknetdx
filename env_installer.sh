@@ -33,12 +33,12 @@ function checkdocker() {
 		DOCKER_VERSION=$(docker --version | awk '{print $3}')
 		DOCKER_VERSION={{$DOCKER_VERSION::-1}}
 		if [ "$(printf '%s\n' "$dockerversion" "$DOCKER_VERSION" | sort --version-sort | head -n1)" = "$dockerversion" ]; then 
-			printf "%s\n\033[92;1mGreater than or equal to ${dockerversion}\033[0m"
+			printf "%s\n\033[92;1mGreater than or equal to ${dockerversion}\033[0m\n"
 		else
 			printf "%s\n\033[91;1mLess than ${dockerversion}. You have to upgrade\033[0m\n"
 		fi
 	else
-		printf "%s\n\033[91;1mDocker not found\033[0m"
+		printf "%s\n\033[91;1mDocker not found\033[0m\n"
 		installdocker
 	fi
 }
@@ -53,12 +53,12 @@ function checkdockercompose() {
 		printf "%s\n\033[92;1mDocker Compose found\033[0m"
 		COMPOSE_VERSION=$(docker-compose --version | awk -F'v' '{print $3}')
 		if [ "$(printf '%s\n' "$composeversion" "$COMPOSE_VERSION" | sort --version-sort | head -n1)" = "$composeversion" ]; then 
-			printf "%s\n\033[92;1mGreater than or equal to ${composeversion}\033[0m"
+			printf "%s\n\033[92;1mGreater than or equal to ${composeversion}\033[0m\n"
 		else
 			printf "%s\n\033[91;1mLess than ${composeversion}. You have to upgrade\033[0m\n"
 		fi
 	else
-		printf "%s\n\033[91;1mDocker Compose not found\033[0m"
+		printf "%s\n\033[91;1mDocker Compose not found\033[0m\n"
 		installdockercompose
 	fi
 }
